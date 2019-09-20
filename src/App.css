@@ -3,6 +3,6 @@
   margin: auto;
   justify-content: center;
   flex-direction: column;
-  height: 400px;
-  vertical-align: center;
+  height: 100vh;
+  width: 100%;
 }

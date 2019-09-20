@@ -20,7 +20,6 @@ class App extends React.Component {
      }
    }
 
-   //what i can do here is make it go slower to make it seem a hold?
    this.interval = setInterval(
      () => {
        if (this.state.timer > 1.75 && this.state.timer < 2){
@@ -35,7 +34,7 @@ class App extends React.Component {
             transform: transformCheck()
           })
        }
-       else {
+       else if (this.state.timer < 5) {
          this.setState({
             timer: .0285 + this.state.timer,
             transform: transformCheck()
@@ -71,13 +70,15 @@ class App extends React.Component {
       </svg>
     }
     return (
-      <div className = "emoji-container" style={{ width: `${this.state.timer * 50 + 'px'}`, transform: `rotate(${this.state.transform}deg)`}}>
+      <div onMouseUp={(e) => this.handleRelease(e, 'up')} className = "emoji-container">
+      <div onMouseUp={(e) => this.handleRelease(e, 'up')} className = "emoji-container" style={{ width: `${this.state.timer * 50 + 'px'}`, transform: `rotate(${this.state.transform}deg)`}}>
       <span
       onMouseDown={(e) => this.handleClick(e, 'down')}
       onMouseUp={(e) => this.handleRelease(e, 'up')}
       >
         {svg}
       </span>
+      </div>
       </div>
     );
   }
