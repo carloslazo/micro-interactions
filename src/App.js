@@ -7,18 +7,9 @@ class App extends React.Component {
    this.state = {
      timer: 1,
      transform: 0,
-     mobile: null
+     emojiName: null,
+     setName: null
    };
- }
-
- componentDidMount() {
-   document.addEventListener('contextmenu', event => event.preventDefault());
-
-   var check = false;
-   (function(a){
-    if(/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino/i.test(a)||/1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw-(n|u)|c55\/|capi|ccwa|cdm-|cell|chtm|cldc|cmd-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc-s|devi|dica|dmob|do(c|p)o|ds(12|-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(-|_)|g1 u|g560|gene|gf-5|g-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd-(m|p|t)|hei-|hi(pt|ta)|hp( i|ip)|hs-c|ht(c(-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i-(20|go|ma)|i230|iac( |-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|-[a-w])|libw|lynx|m1-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|-([1-8]|c))|phil|pire|pl(ay|uc)|pn-2|po(ck|rt|se)|prox|psio|pt-g|qa-a|qc(07|12|21|32|60|-[2-7]|i-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h-|oo|p-)|sdk\/|se(c(-|0|1)|47|mc|nd|ri)|sgh-|shar|sie(-|m)|sk-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h-|v-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl-|tdg-|tel(i|m)|tim-|t-mo|to(pl|sh)|ts(70|m-|m3|m5)|tx-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas-|your|zeto|zte-/i.test(a.substr(0,4))) check = true;})(navigator.userAgent||navigator.vendor||window.opera);
-
-  this.setState({mobile: check})
  }
 
  handleClick(e, id){
@@ -39,13 +30,13 @@ class App extends React.Component {
             transform: transformCheck()
           })
        }
-       else if (this.state.timer > 2.75 && this.state.timer < 3){
+       else if (this.state.timer > 3.75 && this.state.timer < 4){
          this.setState({
             timer: .005 + this.state.timer,
             transform: transformCheck()
           })
        }
-       else if (this.state.timer < 5) {
+       else if (this.state.timer < 5.9) {
          this.setState({
             timer: .0285 + this.state.timer,
             transform: transformCheck()
@@ -59,34 +50,49 @@ class App extends React.Component {
   }
 
  handleRelease(e, id){
+   let emojiName
    clearInterval(this.interval)
-   this.setState({ timer: 1})
+   if (this.state.timer == 1){
+     emojiName = null
+   }
+   else if (this.state.timer <= 2 ){
+     emojiName = "grinning face"
+   }
+   else if (this.state.timer <= 4){
+     emojiName = "grinning face with smiling eyes"
+   }
+   else if (this.state.timer <= 6){
+     emojiName = "face with tears of joy"
+   }
+   this.setState({ timer: 1, transform: 0, setName: emojiName})
  }
 
   render(){
-    let svg = <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800"><path fill="#FFCC4D" d="M757.9 400c0 197.7-160.2 357.9-357.9 357.9S42.1 597.7 42.1 400 202.3 42.1 400 42.1 757.9 202.3 757.9 400"/><path fill="#664500" d="M400 481.1c-62.4 0-103.9-7.3-155.2-17.3-11.7-2.3-34.5 0-34.5 34.5 0 69 79.2 155.2 189.6 155.2s189.6-86.2 189.6-155.2c0-34.5-22.8-36.7-34.5-34.5-51.1 9.9-92.6 17.3-155 17.3"/><path fill="#E75A70" d="M371.6 90.1c-18.1-51.2-74.2-78-125.4-60-31.1 11-53.1 36-61.6 65.4-25.1-17.5-57.9-23.2-89-12.2-51.2 18-78.1 74.2-60 125.4 2.6 7.3 6 14 9.9 20.2C86.6 304.3 205.2 357.3 277.1 358c55.5-45.6 114.7-161.3 99.3-245.8-.7-7.4-2.3-14.8-4.8-22.1m56.8 0c18.1-51.2 74.2-78 125.4-60 31.1 11 53.1 36.1 61.7 65.4 25.1-17.5 57.9-23.2 88.9-12.2 51.2 18 78 74.2 60 125.4-2.7 7.3-6 14-10 20.2-41.1 75.4-159.8 128.4-231.6 129.1-55.5-45.6-114.6-161.3-99.3-245.8.8-7.4 2.4-14.7 4.9-22.1" class="eyes"/></svg>
-
-    if (this.state.timer > 2 && this.state.timer < 3){
-      svg = <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-      <path fill="#ffce31" d="M43.1 2c3.2 4.8 5.1 10.6 5.1 16.8C48.3 35.5 34.6 49 17.7 49 12 49 6.6 47.4 2 44.7 7.2 55 17.9 62 30.3 62 47.8 62 62 48 62 30.7 62 17.9 54.2 6.9 43.1 2z"/></svg>
+    let svg
+    if (this.state.timer > 0 && this.state.timer < 2){
+      svg = <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36"><circle fill="#FFCC4D" cx="18" cy="18" r="18"/><path fill="#664500" d="M18 21c-3.623 0-6.027-.422-9-1-.679-.131-2 0-2 2 0 4 4.595 9 11 9 6.404 0 11-5 11-9 0-2-1.321-2.132-2-2-2.973.578-5.377 1-9 1z"/><path fill="#FFF" d="M9 22s3 1 9 1 9-1 9-1-2 4-9 4-9-4-9-4z"/><ellipse fill="#664500" cx="12" cy="13.5" rx="2.5" ry="3.5"/><ellipse fill="#664500" cx="24" cy="13.5" rx="2.5" ry="3.5"/></svg>
     }
-    else if (this.state.timer > 3) {
-      svg = <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-      	<circle cx="32" cy="32" r="30" fill="#ffdd67"/>
-      	<g transform="scale(-1,1) translate(-64,0)">
-      		<circle cx="22.3" cy="31.6" r="5" fill="#664e27"/>
-      		<path fill="#917524" d="M51.2 27.5c-3.2-2.7-7.5-3.9-11.7-3.1-.6.1-1.1-2-.4-2.2 4.8-.9 9.8.5 13.5 3.6.6.5-1 2.1-1.4 1.7M24.5 18.8c-4.2-.7-8.5.4-11.7 3.1-.4.4-2-1.2-1.4-1.7 3.7-3.2 8.7-4.5 13.5-3.6.7.2.2 2.3-.4 2.2"/>
-      		<path fill="#664e27" d="M50.2 34.3c-1.7-3.5-4.4-5.3-7-5.3s-5.2 1.8-7 5.3c-.2.4.7 1 1.2.6 1.7-1.3 3.7-1.8 5.8-1.8s4.1.5 5.8 1.8c.4.3 1.3-.3 1.2-.6M44.1 42.2c-6.9 3.6-16.4 2.9-19.1 2.9-.7 0-1.2.3-1 .9 2 7 17 7 21.1-2.7.5-1.1-.3-1.4-1-1.1"/>
-      	</g>
-      </svg>
+        
+    else if (this.state.timer > 2 && this.state.timer < 4){
+      svg = <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36"><path fill="#FFCC4D" d="M36 18c0 9.941-8.059 18-18 18-9.94 0-18-8.059-18-18C0 8.06 8.06 0 18 0c9.941 0 18 8.06 18 18"/><path fill="#664500" d="M16 18c-.419 0-.809-.265-.949-.684C14.848 16.717 14.034 15 13 15c-1.062 0-1.888 1.827-2.051 2.316-.175.523-.738.808-1.265.632-.524-.174-.807-.741-.632-1.265C9.177 16.307 10.356 13 13 13s3.823 3.307 3.949 3.684c.175.524-.108 1.091-.632 1.265-.106.034-.213.051-.317.051zm10 0c-.419 0-.809-.265-.948-.684C24.849 16.717 24.033 15 23 15c-1.062 0-1.889 1.827-2.052 2.316-.175.523-.736.808-1.265.632-.523-.174-.807-.741-.632-1.265C19.177 16.307 20.355 13 23 13s3.823 3.307 3.948 3.684c.175.524-.108 1.091-.632 1.265-.105.034-.212.051-.316.051zm-8 4c-3.623 0-6.027-.422-9-1-.679-.131-2 0-2 2 0 4 4.595 9 11 9 6.404 0 11-5 11-9 0-2-1.321-2.132-2-2-2.973.578-5.377 1-9 1z"/><path fill="#FFF" d="M9 23s3 1 9 1 9-1 9-1-1.344 6.75-9 6.75S9 23 9 23z"/><path fill="#664500" d="M18 27.594c-3.596 0-6.272-.372-7.937-.745l-.825-1.871c.823.312 3.889.897 8.763.897 4.954 0 8.037-.616 8.864-.938l-.701 1.842c-1.634.38-4.419.815-8.164.815z"/></svg>
+    }
+    
+    else if (this.state.timer > 4 && this.state.timer < 6){
+      svg = <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36"><path fill="#FFCC4D" d="M36 18c0 9.941-8.059 18-18 18-9.94 0-18-8.059-18-18C0 8.06 8.06 0 18 0c9.941 0 18 8.06 18 18"/><path fill="#664500" d="M28.457 17.797c-.06-.135-1.499-3.297-4.457-3.297-2.957 0-4.397 3.162-4.457 3.297-.092.207-.032.449.145.591.175.142.426.147.61.014.012-.009 1.262-.902 3.702-.902 2.426 0 3.674.881 3.702.901.088.066.194.099.298.099.11 0 .221-.037.312-.109.177-.142.238-.386.145-.594zm-12 0c-.06-.135-1.499-3.297-4.457-3.297-2.957 0-4.397 3.162-4.457 3.297-.092.207-.032.449.144.591.176.142.427.147.61.014.013-.009 1.262-.902 3.703-.902 2.426 0 3.674.881 3.702.901.088.066.194.099.298.099.11 0 .221-.037.312-.109.178-.142.237-.386.145-.594zM31 16c-.396 0-.772-.238-.929-.629-1.778-4.445-6.223-5.381-6.268-5.391-.541-.108-.893-.635-.784-1.177.108-.542.635-.891 1.177-.784.226.045 5.556 1.168 7.732 6.608.205.513-.045 1.095-.558 1.3-.12.05-.246.073-.37.073zM5 16c-.124 0-.249-.023-.371-.072-.513-.205-.762-.787-.557-1.3 2.176-5.44 7.506-6.563 7.732-6.608.543-.106 1.068.243 1.177.784.108.54-.242 1.066-.781 1.176-.185.038-4.506.98-6.271 5.391-.157.391-.533.629-.929.629zm13 6c-3.623 0-6.027-.422-9-1-.679-.131-2 0-2 2 0 4 4.595 9 11 9 6.404 0 11-5 11-9 0-2-1.321-2.132-2-2-2.973.578-5.377 1-9 1z"/><path fill="#FFF" d="M9 23s3 1 9 1 9-1 9-1-2 4-9 4-9-4-9-4z"/><path fill="#5DADEC" d="M10.847 28.229c-.68 2.677-3.4 4.295-6.077 3.615-2.676-.679-4.295-3.399-3.616-6.076.679-2.677 6.337-8.708 7.307-8.462.97.247 3.065 8.247 2.386 10.923zm14.286 0c.68 2.677 3.4 4.295 6.077 3.615 2.677-.679 4.296-3.399 3.616-6.076-.68-2.677-6.338-8.708-7.308-8.462-.968.247-3.064 8.247-2.385 10.923z"/></svg>
     }
     return (
-      <div onTouchEnd={(e) => this.handleRelease(e, 'up')} className = "emoji-container">
-      <div className = "emoji-container" style={{ width: `${this.state.timer * 50 + 'px'}`, transform: `rotate(${this.state.transform}deg)`}}>
-      <span
-      onTouchStart={(e) => this.handleClick(e, 'down')}
-      onTouchEnd={(e) => this.handleRelease(e, 'up')}
+      <div
+        onMouseUp={(e) => this.handleRelease(e, 'up')}
+        className = "background-body"
+        >
+      <div className = "emoji-container"
       >
+      
+      <h2>{this.state.setName}</h2>
+      <span
+        onMouseDown={(e) => this.handleClick(e, 'down')}
+        onMouseUp={(e) => this.handleRelease(e, 'up')}
+        style={{ width: `${this.state.timer * 50 + 'px'}`, transform: `rotate(${this.state.transform}deg)`}}>
         {svg}
       </span>
       </div>
